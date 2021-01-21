@@ -38,7 +38,7 @@ func main() {
 	router.Use(gin.Recovery())
 
 	router.GET("/link/github", ghInit)
-	router.GET("/link/github", func(c *gin.Context) {
+	router.GET("/", func(c *gin.Context) {
 		c.String(200, "OK")
 	})
 	router.GET("/account/github/callback", ghCallback)
