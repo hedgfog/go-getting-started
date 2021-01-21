@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	"cilintservice/servcies/gitsource/githubsource"
@@ -13,7 +13,7 @@ var (
 	gitAuth = &oauth2.Config{
 		ClientID:     "35ccfc4585abf2e301c7",
 		ClientSecret: "aba1d30229dce48152d2c4cc309f7f09020b4b68",
-		RedirectURL:  "http://localhost:8080/account/github/callback",
+		RedirectURL:  "https://cilinter.herokuapp.com/account/github/callback",
 		Scopes: []string{
 			"user:email",
 		},
@@ -26,6 +26,8 @@ func main() {
 	router.Use(gin.Recovery())
 
 	router.GET("/link/github", ghInit)
+	router.GET("/account/github/callback", ghCallback)
+	router.GET("/account/github/workbook", handleWebhook)
 
 	router.Run(":8080")
 
@@ -47,7 +49,7 @@ func ghCallback(c *gin.Context) {
 
 	info, err := client.ListUserRepos()
 
-	err = client.CreateRepoWebhook("hedgfog/relayer", "http://localhost:8080//webhook", "SECRET")
+	err = client.CreateRepoWebhook("hedgfog/relayer", "https://cilinter.herokuapp.com/account/github/workbook", "SECRET")
 	if err != nil {
 		log.Println("ERR:", err)
 	}
