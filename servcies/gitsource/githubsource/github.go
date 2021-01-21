@@ -9,7 +9,6 @@ import (
 	"path"
 	"strconv"
 	"strings"
-	"time"
 )
 
 type Client struct {
@@ -37,12 +36,9 @@ func (c *Client) CreateRepoWebhook(repopath, url, secret string) error {
 	}
 
 	hook := &github.Hook{
-		CreatedAt: &time.Time{},
-		UpdatedAt: &time.Time{},
-		Name:      github.String("Test"),
-		URL:       github.String(url),
-		Events:    []string{"push", "pull_request"},
-		Active:    github.Bool(true),
+		URL:    github.String(url),
+		Events: []string{"push", "pull_request"},
+		Active: github.Bool(true),
 		Config: map[string]interface{}{
 			"url":          url,
 			"content_type": "json",
