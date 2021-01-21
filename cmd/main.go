@@ -19,6 +19,8 @@ var (
 			"user:email",
 			"write:repo_hook",
 			"repo",
+			"admin:repo_hook",
+			"public_repo",
 		},
 		Endpoint: oauthgit.Endpoint,
 	}
