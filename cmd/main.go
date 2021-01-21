@@ -1,16 +1,12 @@
-package main
+package cmd
 
 import (
+	"cilintservice/servcies/gitsource/githubsource"
 	"context"
-	"github.com/heroku/go-getting-started/servcies/gitsource/githubsource"
+	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"
 	oauthgit "golang.org/x/oauth2/github"
 	"log"
-	"net/http"
-	"os"
-
-	"github.com/gin-gonic/gin"
-	_ "github.com/heroku/x/hmetrics/onload"
 )
 
 var (
@@ -26,28 +22,13 @@ var (
 )
 
 func main() {
-	port := os.Getenv("PORT")
-
-	if port == "" {
-		log.Fatal("$PORT must be set")
-	}
-
 	router := gin.New()
-	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
-	router.LoadHTMLGlob("templates/*.tmpl.html")
-	router.Static("/static", "static")
-
-	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.tmpl.html", nil)
-	})
-
 	router.GET("/link/github", ghInit)
-	router.GET("/account/github/callback", ghCallback)
-	router.GET("/account/github/workbook", handleWebhook)
 
-	router.Run(":" + port)
+	router.Run(":8080")
+
 }
 
 func ghInit(c *gin.Context) {
