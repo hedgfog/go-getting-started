@@ -1,3 +1,5 @@
+// +heroku install ./cmd/...
+
 module cilintservice
 
 go 1.15
