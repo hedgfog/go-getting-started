@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/go-github/github"
+	"io/ioutil"
 	"net/http"
 	"path"
 	"strconv"
@@ -46,8 +47,8 @@ func (c *Client) CreateRepoWebhook(repopath, url, secret string) error {
 		Active: github.Bool(true),
 	}
 
-	if _, _, err = c.client.Repositories.CreateHook(context.Background(), owner, reponame, hook); err != nil {
-		return fmt.Errorf("error creating repository webhook: %w", err)
+	if _, res, err := c.client.Repositories.CreateHook(context.Background(), owner, reponame, hook); err != nil {
+		return fmt.Errorf("error creating repository webhook: %w", ioutil.ReadAll(res.Body))
 	}
 
 	return nil
