@@ -36,7 +36,6 @@ func (c *Client) CreateRepoWebhook(repopath, url, secret string) error {
 	}
 
 	hook := &github.Hook{
-		URL:    github.String(url),
 		Events: []string{"push", "pull_request"},
 		Active: github.Bool(true),
 		Config: map[string]interface{}{
