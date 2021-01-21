@@ -37,10 +37,9 @@ func (c *Client) CreateRepoWebhook(repopath, url, secret string) error {
 	}
 
 	hook := &github.Hook{
-		Name: github.String("BestHook"),
 		Config: map[string]interface{}{
 			"url":          url,
-			"content_type": "application/json",
+			"content_type": "json",
 			"secret":       secret,
 		},
 		Events: []string{"push", "pull_request"},
