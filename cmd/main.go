@@ -17,6 +17,8 @@ var (
 		RedirectURL:  "https://cilinter.herokuapp.com/account/github/callback",
 		Scopes: []string{
 			"user:email",
+			"write:repo_hook",
+			"repo",
 		},
 		Endpoint: oauthgit.Endpoint,
 	}
