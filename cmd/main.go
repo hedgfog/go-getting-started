@@ -7,6 +7,7 @@ import (
 	"golang.org/x/oauth2"
 	oauthgit "golang.org/x/oauth2/github"
 	"log"
+	"os"
 )
 
 var (
@@ -22,6 +23,12 @@ var (
 )
 
 func main() {
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+
 	router := gin.New()
 	router.Use(gin.Recovery())
 
@@ -29,7 +36,7 @@ func main() {
 	router.GET("/account/github/callback", ghCallback)
 	router.GET("/account/github/workbook", handleWebhook)
 
-	router.Run(":8080")
+	router.Run(":" + port)
 
 }
 
