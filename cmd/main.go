@@ -7,6 +7,7 @@ import (
 	"golang.org/x/oauth2"
 	oauthgit "golang.org/x/oauth2/github"
 	"log"
+	"net/http"
 	"os"
 )
 
@@ -37,6 +38,9 @@ func main() {
 	router.Use(gin.Recovery())
 
 	router.GET("/link/github", ghInit)
+	router.GET("/link/github", func(c *gin.Context) {
+		c.String(200, "OK")
+	})
 	router.GET("/account/github/callback", ghCallback)
 	router.GET("/account/github/workbook", handleWebhook)
 
@@ -68,6 +72,7 @@ func ghCallback(c *gin.Context) {
 	c.JSON(200, info)
 }
 
-func handleWebhook(c *gin.Context) {
-
+func handleWebhook(ctx *gin.Context) {
+	log.Println("PUSH EVENT")
+	ctx.String(http.StatusOK, "PUSH EVENT")
 }
