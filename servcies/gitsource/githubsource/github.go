@@ -1,10 +1,10 @@
 package githubsource
 
 import (
+	"cilintservice/servcies/gitsource"
 	"context"
 	"fmt"
 	"github.com/google/go-github/github"
-	"github.com/heroku/go-getting-started/servcies/gitsource"
 	"net/http"
 	"path"
 	"strconv"
